@@ -1,0 +1,65 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello AI - Chatbot</title>
+    <script src="https://js.puter.com/v2/"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">🤖 Hello AI</div>
+            <img src="profile.png" alt="User" class="profile-pic">
+        </header>
+        <main>
+
+            <h2><a href="chat.html" class="chat-link">Hi User, 
+            <!-- <h2>Hi User,</h2> -->
+            <h1>What would you like to know?</h1>
+            <p>Use one of the common prompts below or type your own question.</p>
+            <div class="prompt-buttons">
+                <button onclick="askAI('Write a to-do list')">📝 Write a to-do list</button>
+                <button onclick="askAI('Generate an email for a job offer')">📷 Generate job email</button>
+                <button onclick="askAI('How does AI work?')">💡 How does AI work?</button>
+            </div>
+
+
+            <div class="search-bar">
+                <input type="text" id="userInput" placeholder="Ask whatever you want">
+                <button onclick="getResponse()">➡</button>
+            </div>
+            <p id="output"></p>
+        </a></h2>
+        </main>
+    </div>
+
+    <script>
+        function getResponse() {
+            let userMessage = document.getElementById("userInput").value.trim();
+            if (!userMessage) {
+                document.getElementById("output").innerText = "Please enter a message!";
+                return;
+            }
+            askAI(userMessage);
+        }
+
+        function askAI(message) {
+            document.getElementById("output").innerHTML = "<strong>Thinking...</strong>";
+
+            puter.ai.chat(message)
+                .then(response => {
+                    document.getElementById("output").innerHTML = `<strong>AI:</strong> ${response}`;
+                })
+                .catch(error => {
+                    document.getElementById("output").innerHTML = "<strong>Error:</strong> Unable to get a response.";
+                    console.error("Error fetching AI response:", error);
+                });
+        }
+    </script>
+</body>
+</html>
