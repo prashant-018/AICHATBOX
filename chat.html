@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello AI - Chat</title>
+    <script src="https://js.puter.com/v2/"></script>
+    <link rel="stylesheet" href="chat.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-button">⬅ Home</a>
+            <div class="logo">🤖 AI Chat</div>
+        </header>
+        <main>
+            <div id="chat-box"></div>
+            <div class="chat-input">
+                <input type="text" id="userInput" placeholder="Type a message...">
+                <button onclick="getResponse()">➡</button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function getResponse() {
+            let userMessage = document.getElementById("userInput").value.trim();
+            if (!userMessage) return;
+
+            addMessage("You", userMessage);
+            puter.ai.chat(userMessage)
+                .then(response => addMessage("AI", response))
+                .catch(() => addMessage("AI", "Error: Unable to get response."));
+        }
+
+        function addMessage(sender, message) {
+            let chatBox = document.getElementById("chat-box");
+            let msgElement = document.createElement("p");
+            msgElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
+            chatBox.appendChild(msgElement);
+        }
+
+        window.onload = function () {
+            let savedQuestion = localStorage.getItem("question");
+            if (savedQuestion) {
+                document.getElementById("userInput").value = savedQuestion;
+                getResponse();
+            }
+        };
+    </script>
+</body>
+</html> 
+
